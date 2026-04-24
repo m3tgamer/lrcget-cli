@@ -168,8 +168,10 @@ fn log_docker_session_stats(session: &WatchSession) {
 
 fn truncate_path_for_log(path: &PathBuf) -> String {
     let path_str = path.to_string_lossy();
+    let char_count = path_str.chars().count();
     if path_str.len() > 60 {
-        format!("...{}", &path_str[path_str.len() - 57..])
+        let truncated: String = path_str.chars().skip(char_count - 57).collect();
+        format!("...{}", truncated)
     } else {
         path_str.to_string()
     }
